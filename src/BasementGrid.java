@@ -95,5 +95,47 @@ public class BasementGrid
 			}
 		}		
 	}
+	// This function is used to print the policy, it takes the qlearning obj and extracts the policy Q Matrix
+	public void print_Policy(Q_Learning qlearn)
+	{
+		for(int i=0; i<10; i++)
+		{
+			for(int j =0; j< 10; j++)
+			{
+				// Excluding walls
+				if( i == 0 || j == 0 || i == 9 || j == 9)
+				{
+					System.out.print("X" + "   ");
+				}
+				else if( (i == 6 && j == 4) || (i == 7 && j == 4) || (i == 8 && j == 4) || (i == 4 && j == 6) || (i == 5 && j == 6) || (i == 6 && j == 6) || (i == 2 && j == 4) || (i == 2 && j == 5) || (i == 2 && j == 6) || (i == 2 && j == 2) || (i == 3 && j == 2) || (i == 4 && j == 2) )
+				{
+					System.out.print("X" + "   ");
+				}
+				else
+				{
+					// Prints the policy
+					switch (qlearn.get_Max_Action(qlearn.Q[10 * i + j])) // Extracts the max value for that cell in q maritx
+					{
+						case 0:
+							System.out.print("^" + "   ");  // Top is highest
+							break;
+
+						case 1:
+							System.out.print("v" + "   ");  // Bottom is highest
+							break;
+
+						case 2:
+							System.out.print("<" + "   ");  // Left is highest
+							break;
+
+						case 3:
+							System.out.print(">" + "   ");  // Right is highest
+							break;
+					}
+				}
+			}
+			System.out.println("\n");
+		}
+	}
 	
 }
