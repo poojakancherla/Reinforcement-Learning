@@ -96,7 +96,7 @@ public class BasementGrid
 		}		
 	}
 	// This function is used to print the policy, it takes the qlearning obj and extracts the policy Q Matrix
-	public void print_Policy(Q_Learning qlearn)
+	public void print_Policy(QLearning qlearn)
 	{
 		for(int i=0; i<10; i++)
 		{
