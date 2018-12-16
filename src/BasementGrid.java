@@ -96,21 +96,4 @@ public class BasementGrid
 		}		
 	}
 	
-	public void render()  // Deprecated function, initially was used to show the movement of Tim in the base
-	{		
-		for (int i = 0; i < 10; i++) 
-		{
-			for (int j = 0; j < 10; j++) 
-			{				
-				if(basement[i][j] == '\0')
-				{
-					System.out.print(" ");
-				}
-				
-				System.out.print(basement[i][j] + "   ");				
-			}			
-			System.out.println();
-		}
-	}	
-	
 }
