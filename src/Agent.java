@@ -70,4 +70,28 @@ public class Agent
         }
         return reward;
     }
+
+    // Checks tile falls using the current location of Tim
+    public int check_traps(BasementGrid Base) {
+
+        if((x == 1 && y == 3) || (x == 2 && y == 7) || (x == 3 && y == 4) || (x == 5 && y == 2) || (x == 6 && y == 5) || (x == 6 && y == 7) || (x == 7 && y == 2))
+        {
+
+            int Tile_Prob = r.nextInt(100);
+
+            // Tim got crushed with the tile
+            if(Tile_Prob < 50)
+            {
+                return 10;
+            }
+        }
+        return 0;
+    }
+
+    public void update(BasementGrid Base, int Reward, int State, int New_State, int Action)
+    {
+        double Max_Action = qlearn.get_Max_Action_Value(qlearn.Q[New_State]);
+
+        qlearn.Q[State][Action] += qlearn.Alpha * (Reward + qlearn.Discount_Factor * Max_Action - qlearn.Q[State][Action]);
+    }
 }
