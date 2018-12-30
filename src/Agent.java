@@ -94,4 +94,93 @@ public class Agent
 
         qlearn.Q[State][Action] += qlearn.Alpha * (Reward + qlearn.Discount_Factor * Max_Action - qlearn.Q[State][Action]);
     }
+
+    // Moves Tim temporarily and validates the move, if it's legal then update the location of Tim
+    public void move(BasementGrid Base)
+    {
+        int Reward = 0;
+        int State = x * 10 + y;
+
+        int Action = qlearn.get_Max_Action(qlearn.Q[State]);
+
+
+        // Code to deal with his 82% case
+        int chance = r.nextInt(100);
+
+        int finAction = -1;
+
+        if(chance < 82)
+        {
+            finAction = Action;
+        }
+        else
+        {
+            // Tim now takes a random walk
+            int random_walk;
+            do
+            {
+                random_walk = r.nextInt(4);
+                if(random_walk != Action)
+                    finAction = random_walk;
+            }
+            while(random_walk == Action);
+        }
+
+        switch(finAction)
+        {
+            case 0:
+                move_up();
+
+                Reward += check_Move(Base);
+
+                break;
+
+            case 1:
+                move_down();
+
+                Reward += check_Move(Base);
+
+                break;
+
+            case 2:
+                move_left();
+
+                Reward += check_Move(Base);
+
+                break;
+
+            case 3:
+                move_right();
+
+                Reward += check_Move(Base);
+
+                break;
+
+            default:
+                break;
+
+        }
+
+        // Checks if he ate a donut
+        if (Base.basement[x][y] == 'D')
+        {
+            Base.Donut_on_Map = false;
+            Reward += 10;
+        }
+
+        Base.basement[x][y] = 'T'; // Placing Tim after the Move!
+
+        Reward -= check_traps(Base); // Checking if he stepped into traps
+
+        int New_State = 10 * x + y;
+
+        update(Base, Reward, State, New_State, finAction);
+    }
+
+    // Prints the policy from Q_Learning Class
+    public void print_Policy(BasementGrid Base)
+    {
+        Base.print_Policy(qlearn);
+    }
+
 }
