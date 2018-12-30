@@ -6,7 +6,7 @@ public class Agent
     Random r = new Random();
     private int x, y, temp_x, temp_y;
 
-    // Initializes the Q Martix with default values		
+    // Initializes the Q Martix with default values
     QLearning qlearn;
 
     public Agent(BasementGrid Base)
@@ -20,5 +20,54 @@ public class Agent
 
 
         Base.basement[x][y] = 'T';
+    }
+
+    public void move_up()
+    {
+        temp_x += -1;
+        temp_y += 0;
+    }
+
+    public void move_down()
+    {
+        temp_x += 1;
+        temp_y += 0;
+    }
+
+    public void move_left()
+    {
+        temp_x += 0;
+        temp_y += -1;
+    }
+
+    public void move_right()
+    {
+        temp_x += 0;
+        temp_y += 1;
+    }
+
+
+    // Checks the validity of the move, and also calculates reward for hitting/not hitting the wall
+    public int check_Move(BasementGrid Base)
+    {
+        int reward = 0;
+        if(Base.basement[temp_x][temp_y] == 'X')
+        {
+            reward = -1;
+            temp_x = x;
+            temp_y = y;
+        }
+        else
+        {
+            if(Base.basement[x][y] != 'D')
+            {
+                Base.basement[x][y] = '\0';
+            }
+
+            // Move is legal so actually move tim now!
+            x = temp_x;
+            y = temp_y;
+        }
+        return reward;
     }
 }
